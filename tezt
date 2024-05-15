@@ -1,0 +1,59 @@
+using UnityEngine;
+
+public class SmoothCamera : MonoBehaviour
+{
+    public Transform target;
+    public float distance = 10.0f;
+    public float height = 5.0f;
+    public float heightDamping = 2.0f;
+    public float followDamping = 5.0f;
+    public LayerMask obstacleMask; // Layer-ul pentru obiectele care blochează vederea camerei
+    public float minDistance = 2f; // Distanța minimă la care camera poate ajunge
+
+    void LateUpdate()
+    {
+        if (!target)
+            return;
+
+        // Calculează înălțimea dorită a camerei
+        float wantedHeight = target.position.y + height;
+
+        // Calculează poziția dorită a camerei
+        Vector3 wantedPosition = target.position - target.forward * distance;
+        wantedPosition.y = wantedHeight;
+
+        // Inițializăm variabila care va stoca cea mai mică distanță găsită
+        float nearestObstacleDistance = float.MaxValue;
+
+        // Obținem toate obiectele care blochează vederea camerei
+        RaycastHit[] hits = Physics.RaycastAll(target.position, -transform.forward, distance, obstacleMask);
+
+        // Parcurgem toate obiectele și găsim cel mai apropiat
+        foreach (RaycastHit hit in hits)
+        {
+            if (hit.distance < nearestObstacleDistance)
+            {
+                nearestObstacleDistance = hit.distance;
+            }
+        }
+
+        // Reducem distanța doar dacă am găsit un obstacol
+        if (nearestObstacleDistance < float.MaxValue)
+        {
+            float newDistance = Mathf.Max(nearestObstacleDistance - minDistance, minDistance);
+            wantedPosition = target.position - target.forward * newDistance;
+            wantedPosition.y = wantedHeight;
+        }
+
+        // Interpolare pentru înălțimea camerei
+        float currentHeight = Mathf.Lerp(transform.position.y, wantedHeight, heightDamping * Time.deltaTime);
+
+        // Interpolare pentru poziția camerei
+        Vector3 currentPosition = Vector3.Lerp(transform.position, wantedPosition, followDamping * Time.deltaTime);
+        currentPosition.y = currentHeight;
+
+        // Aplică poziția și orientarea camerei
+        transform.position = currentPosition;
+        transform.LookAt(target);
+    }
+}
