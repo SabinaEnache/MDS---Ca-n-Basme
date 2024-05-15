@@ -44,24 +44,14 @@ public class SmoothCamera : MonoBehaviour
             currentPosition.y = currentHeight;
         }
 
-        // Aplică poziția și orientarea camerei
+        // Aplică poziția camerei
         transform.position = currentPosition;
 
         // Rotație a camerei
-        float currentRotationAngle = transform.eulerAngles.y;
-        float wantedRotationAngle = target.eulerAngles.y;
-        float rotationAngle = Mathf.LerpAngle(currentRotationAngle, wantedRotationAngle, rotationDamping * Time.deltaTime);
-        Quaternion currentRotation = Quaternion.Euler(0, rotationAngle, 0);
-        transform.rotation = currentRotation;
+        Quaternion currentRotation = Quaternion.LookRotation(target.position - transform.position);
+        transform.rotation = Quaternion.Lerp(transform.rotation, currentRotation, rotationDamping * Time.deltaTime);
 
         // Actualizează poziția anterioară a jucătorului
         lastPosition = target.position;
-    }
-
-    // Calculează viteza de deplasare a jucătorului
-    float CalculatePlayerSpeed()
-    {
-        float playerSpeed = Vector3.Distance(target.position, lastPosition) / Time.deltaTime;
-        return playerSpeed;
     }
 }
