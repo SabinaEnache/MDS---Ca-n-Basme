@@ -5,6 +5,7 @@ public class SmoothCamera : MonoBehaviour
     public Transform target;
     public float distance = 10.0f;
     public float height = 5.0f;
+    public float minHeight = 2.0f; // Noua variabilă pentru înălțimea minimă a camerei
     public float heightDamping = 2.0f;
     public float followDamping = 5.0f;
 
@@ -26,7 +27,7 @@ public class SmoothCamera : MonoBehaviour
             if (hit.transform != target)
             {
                 nearestObstacleDistance = hit.distance;
-                // Schimbă distanța și înălțimea camerei în funcție de distanța la cel mai apropiat obstacol
+                // Ajustăm distanța și înălțimea camerei în funcție de distanța la cel mai apropiat obstacol
                 distance -= nearestObstacleDistance;
                 height -= 2.0f;
             }
@@ -34,8 +35,12 @@ public class SmoothCamera : MonoBehaviour
         else
         {
             nearestObstacleDistance = 0.0f;
+            // Verificăm dacă înălțimea este mai mică decât înălțimea minimă și o setăm la valoarea minimă dacă este cazul
+            if (height < minHeight)
+            {
+                height = minHeight;
+            }
             distance = 10.0f;
-            height = 5.0f;
         }
 
         float currentHeight = Mathf.Lerp(transform.position.y, wantedHeight, heightDamping * Time.deltaTime);
