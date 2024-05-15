@@ -7,9 +7,7 @@ public class SmoothCamera : MonoBehaviour
     public float height = 5.0f;
     public float heightDamping = 2.0f;
     public float followDamping = 5.0f;
-
-    // Adaugăm o variabilă pentru distanța către cel mai apropiat obstacol
-    private float nearestObstacleDistance = 0.0f;
+    public LayerMask obstacleMask; // Layer pentru obstacole
 
     void LateUpdate()
     {
@@ -23,35 +21,23 @@ public class SmoothCamera : MonoBehaviour
         Vector3 wantedPosition = target.position - target.forward * distance;
         wantedPosition.y = wantedHeight;
 
-        // Verifică dacă există obstacole în fața camerei
+        // Verifică dacă există obstacole între cameră și țintă
         RaycastHit hit;
-        if (Physics.Raycast(target.position, -target.forward, out hit))
+        if (Physics.Linecast(target.position, wantedPosition, out hit, obstacleMask))
         {
-            if (hit.transform != target) // Dacă obstacolul nu este chiar ținta
-            {
-                nearestObstacleDistance = hit.distance;
-                // Schimbă distanța și înălțimea camerei în funcție de distanța la cel mai apropiat obstacol
-                float minDistance = 2.0f; // Distanta minima dorita
-                if (nearestObstacleDistance < minDistance)
-                {
-                    distance -= (nearestObstacleDistance - minDistance);
-                    height -= 2.0f;
-                }
-            }
+            // Dacă există un obstacol, ajustează poziția camerei
+            currentPosition = hit.point;
+            currentPosition.y += height;
         }
-        else // Dacă nu există obstacole în fața camerei, revenim la valorile inițiale
+        else
         {
-            nearestObstacleDistance = 0.0f;
-            distance = 10.0f;
-            height = 5.0f;
+            // Interpolare pentru înălțimea camerei
+            float currentHeight = Mathf.Lerp(transform.position.y, wantedHeight, heightDamping * Time.deltaTime);
+
+            // Interpolare pentru poziția camerei
+            Vector3 currentPosition = Vector3.Lerp(transform.position, wantedPosition, followDamping * Time.deltaTime);
+            currentPosition.y = currentHeight;
         }
-
-        // Interpolare pentru înălțimea camerei
-        float currentHeight = Mathf.Lerp(transform.position.y, wantedHeight, heightDamping * Time.deltaTime);
-
-        // Interpolare pentru poziția camerei
-        Vector3 currentPosition = Vector3.Lerp(transform.position, wantedPosition, followDamping * Time.deltaTime);
-        currentPosition.y = currentHeight;
 
         // Aplică poziția și orientarea camerei
         transform.position = currentPosition;
