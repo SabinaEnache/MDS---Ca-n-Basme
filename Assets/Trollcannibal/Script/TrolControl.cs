@@ -9,7 +9,6 @@ public class TrolControl : MonoBehaviour, IEnemyController
     public int firstTimeDed=0;
     public CharacterController controller;
     public Transform player;
-
     public float RangeDeAttack=1;
 
     public float ImpactTime=0.70f;
@@ -32,7 +31,7 @@ public class TrolControl : MonoBehaviour, IEnemyController
 
     public void GetHit(int damage)
     {
-
+        
         if (Health <= 0)
         {
             Health = 0;
@@ -42,7 +41,7 @@ public class TrolControl : MonoBehaviour, IEnemyController
 
     void Update()
     {
-        if(animator.GetInteger("moving")==9 && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.9f) {
+        if(Health<=0 && animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.9f) {
             Destroy(gameObject);
         }
         if (!isDead())

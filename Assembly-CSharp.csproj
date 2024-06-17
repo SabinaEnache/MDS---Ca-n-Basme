@@ -10,7 +10,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{C0FBA166-AD32-EBFB-717F-FC81CBE81F54}</ProjectGuid>
+    <ProjectGuid>{9F5415DE-1AD4-AD9F-969B-FE736331A9FF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -86,6 +86,7 @@
     <Compile Include="Assets\HuaYao\RTTTest\GaussianBlurEffect.cs" />
     <Compile Include="Assets\ZanaMalefica.cs" />
     <Compile Include="Assets\DialogueEditor\Assets\Scripts\SetParamAction.cs" />
+    <Compile Include="Assets\Music\MusicTrigger.cs" />
     <Compile Include="Assets\DialogueEditor\Assets\Scripts\EditableConnection.cs" />
     <Compile Include="Assets\Fighter.cs" />
     <Compile Include="Assets\Mob.cs" />
@@ -99,7 +100,9 @@
     <Compile Include="Assets\Fighter3.cs" />
     <Compile Include="Assets\IdlePentruNPC.cs" />
     <Compile Include="Assets\Fighter4.cs" />
+    <Compile Include="Assets\Music\MusicManager.cs" />
     <Compile Include="Assets\DialogueEditor\Assets\Scripts\Parameter.cs" />
+    <Compile Include="Assets\healthManager.cs" />
     <Compile Include="Assets\DialogManager.cs" />
     <Compile Include="Assets\NPC.cs" />
     <Compile Include="Assets\Sketchfab For Unity\Scripts\AssetBrowser\SketchfabBrowserManager.cs" />
@@ -111,6 +114,7 @@
     <Compile Include="Assets\Scripts\Dialogue\DialogueController.cs" />
     <Compile Include="Assets\DialogueEditor\Example\ExampleInputManager.cs" />
     <Compile Include="Assets\Scripts\Dialogue\DialogueText.cs" />
+    <Compile Include="Assets\MainMenu.cs" />
     <Compile Include="Assets\Sketchfab For Unity\Scripts\Resizer.cs" />
     <Compile Include="Assets\RedDragon 1.2\Assets\Scripts\DragonExample.cs" />
     <Compile Include="Assets\Sketchfab For Unity\Scripts\SketchfabApi.cs" />
@@ -159,6 +163,7 @@
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
     <None Include="Assets\Sketchfab For Unity\Dependencies\Shaders\GLTFBumpToNormal.shader" />
+    <None Include="Assets\Golden_Princess\license.txt" />
     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
     <None Include="Assets\Toon\Shader\UCTS_ShadowCaster.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
@@ -1133,15 +1138,15 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Boxophobic.Utils.Scripts.csproj">
-      <Project>{A8CCFB3F-239B-5912-BED7-99024063CB95}</Project>
+      <Project>{2F7769E0-8AC9-B95F-C82C-BDF45760CC98}</Project>
       <Name>Boxophobic.Utils.Scripts</Name>
     </ProjectReference>
     <ProjectReference Include="Boxophobic.SkyboxCubemapExtended.Editor.csproj">
-      <Project>{2F7459BE-B79A-69E2-8F4B-B9725EAC185D}</Project>
+      <Project>{CBA14B7D-75DD-C3CB-AD2F-A45D99F37973}</Project>
       <Name>Boxophobic.SkyboxCubemapExtended.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="Boxophobic.Utils.Editor.csproj">
-      <Project>{86351879-B48C-B00B-45D1-E9FE53BC79A9}</Project>
+      <Project>{60394432-1D38-C44A-AED4-67B2C59A3FE9}</Project>
       <Name>Boxophobic.Utils.Editor</Name>
     </ProjectReference>
   </ItemGroup>
